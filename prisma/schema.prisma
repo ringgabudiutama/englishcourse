@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DATABASE_URL_UNPOOLED")
+}
+
+enum Role {
+  ADMIN
+}
+
+enum Level {
+  PEMULA
+  MENENGAH
+  MAHIR
+  SEMUA_LEVEL
+}
+
+enum StatusProduk {
+  DRAFT
+  PUBLISH
+}
+
+model Admin {
+  id           String   @id @default(cuid())
+  name         String
+  email        String   @unique
+  passwordHash String
+  role         Role     @default(ADMIN)
+  createdAt    DateTime @default(now())
+
+  produk Produk[]
+}
+
+model Produk {
+  id          String       @id @default(cuid())
+  adminId     String
+  admin       Admin        @relation(fields: [adminId], references: [id], onDelete: Cascade)
+
+  kategori    String // Speaking, Listening, Vocabulary, Grammar, Writing, Reading, dst
+  nama        String
+  deskripsi   String       @db.Text
+  fitur       String       @db.Text // satu fitur per baris, ditampilkan sebagai bullet list
+  level       Level        @default(SEMUA_LEVEL)
+  durasi      String? // contoh: "8 pertemuan / 4 minggu"
+  harga       Int
+  hargaCoret  Int? // harga asli sebelum diskon, opsional
+  pamfletUrl  String?
+  populer     Boolean      @default(false)
+
+  status    StatusProduk @default(DRAFT)
+  views     Int          @default(0)
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
+
+  @@index([kategori])
+  @@index([status])
+}
+
+// singleton row (id selalu "main") untuk pengaturan situs yang bisa diubah admin
+model SiteConfig {
+  id             String   @id @default("main")
+  namaBrand      String   @default("EnglishKu")
+  tagline        String   @default("Kuasai Bahasa Inggris Bersama Mentor Berpengalaman")
+  whatsappAdmin  String   @default("6281234567890")
+  email          String?
+  alamat         String?
+  jamOperasional String?  @default("Senin - Sabtu, 09.00 - 20.00")
+  instagram      String?
+  totalSiswa     String   @default("500+")
+  totalMentor    String   @default("15+")
+  tahunPengalaman String  @default("8+")
+  updatedAt      DateTime @updatedAt
+}
