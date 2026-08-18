@@ -5,6 +5,8 @@ import DeleteProdukButton from "@/components/DeleteProdukButton";
 import ToggleStatusButton from "@/components/ToggleStatusButton";
 import type { Prisma } from "@prisma/client";
 
+export const dynamic = "force-dynamic";
+
 type SearchParams = { q?: string; tab?: "semua" | "publish" | "draft" };
 
 export default async function KelolaProdukPage({

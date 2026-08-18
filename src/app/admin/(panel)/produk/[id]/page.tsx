@@ -8,6 +8,8 @@ import { formatRupiah, formatRelatif, diskonPersen, fiturList } from "@/lib/util
 import { LEVEL_LABEL, STATUS_LABEL } from "@/lib/categories";
 import { Eye, ArrowLeft, ExternalLink, CheckCircle2 } from "lucide-react";
 
+export const dynamic = "force-dynamic";
+
 export default async function ProdukDetailPage({
   params,
   searchParams,

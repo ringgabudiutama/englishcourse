@@ -1,6 +1,8 @@
 import { prisma } from "@/lib/prisma";
 import PengaturanForm from "@/components/PengaturanForm";
 
+export const dynamic = "force-dynamic";
+
 export default async function PengaturanPage() {
   const config = await prisma.siteConfig.findUnique({ where: { id: "main" } });
 
