@@ -55,37 +55,50 @@ export default async function HomePage() {
       <Navbar />
 
       {/* HERO */}
-      <section className="relative overflow-hidden bg-brand-50/60 px-4 pb-14 pt-14 sm:px-6 sm:pt-20">
-        <div className="absolute inset-0 bg-grid-fade-light" />
-        <div className="absolute inset-0 bg-dot-grid bg-dot-sm opacity-40" />
-        <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-2">
+      <section className="relative overflow-hidden bg-[#FBF8F2] px-4 pb-14 pt-10 sm:px-6 sm:pt-14">
+        <div className="absolute inset-0 bg-dot-grid bg-dot-sm opacity-30" />
+        <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-2">
           <div>
             <span className="badge border border-brand-200 bg-white text-brand-700">
-              <Sparkles size={12} className="mr-1" /> {config.totalSiswa} siswa telah bergabung
+              <Sparkles size={12} className="mr-1" /> Kursus Online & Tatap Muka
             </span>
             <h1 className="mt-5 font-display text-4xl font-extrabold leading-[1.1] text-forest-950 sm:text-5xl">
-              Kuasai <span className="text-brand-600">Bahasa Inggris</span> Bersama {config.namaBrand}
+              Kuasai <span className="text-brand-600">Bahasa Inggris</span> yang Kamu Butuhkan
             </h1>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-ink-500">
-              {config.tagline}. Kelas Speaking, Listening, Vocabulary, hingga persiapan TOEFL/IELTS
-              dengan mentor berpengalaman.
+              {config.tagline}. Kelas Speaking, Listening, Vocabulary, hingga persiapan
+              TOEFL/IELTS bersama {config.totalSiswa} siswa yang sudah bergabung.
             </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-              <Link href="/program" className="btn-primary">
-                Lihat Semua Program <ArrowRight size={16} />
-              </Link>
-              <a
-                href={waLink(config.whatsappAdmin, "Halo, saya ingin konsultasi kursus di EnglishKu.")}
-                target="_blank"
-                rel="noreferrer"
-                className="btn-outline"
-              >
-                Konsultasi Gratis via WhatsApp
-              </a>
+
+            <form action="/program" method="GET" className="mt-7 flex flex-col gap-2 rounded-xl2 bg-white p-2 shadow-card-hover sm:flex-row">
+              <input
+                name="q"
+                placeholder="Cari kelas, contoh: Speaking..."
+                className="flex-1 rounded-lg border-none bg-transparent px-3.5 py-2.5 text-sm text-ink-900 placeholder:text-ink-300 focus:outline-none"
+              />
+              <button type="submit" className="btn-primary shrink-0">Cari Kelas</button>
+            </form>
+
+            <div className="mt-4 flex flex-wrap items-center gap-2 text-xs">
+              <span className="font-semibold uppercase tracking-wide text-ink-500">Populer:</span>
+              {["Speaking", "Listening", "Vocabulary", "TOEFL / IELTS Preparation"].map((k) => (
+                <Link
+                  key={k}
+                  href={`/program?kategori=${encodeURIComponent(k)}`}
+                  className="rounded-full border border-ink-100 bg-white px-3 py-1.5 font-medium text-ink-700 transition hover:border-brand-300 hover:text-brand-600"
+                >
+                  {k.split(" / ")[0]}
+                </Link>
+              ))}
             </div>
           </div>
 
-          <HeroVisual />
+          <HeroVisual
+            fotoUrl={config.heroFotoUrl}
+            totalSiswa={config.totalSiswa}
+            totalMentor={config.totalMentor}
+            tahunPengalaman={config.tahunPengalaman}
+          />
         </div>
       </section>
 
@@ -100,27 +113,31 @@ export default async function HomePage() {
 
       {/* CATEGORIES */}
       <section className="mx-auto max-w-6xl px-4 py-16 sm:px-6">
-        <div className="mb-8 text-center">
-          <h2 className="text-2xl font-bold text-forest-950">Program Kursus Kami</h2>
-          <p className="mt-1 text-sm text-ink-500">Pilih kelas sesuai kebutuhan dan tujuan belajarmu</p>
+        <div className="mb-10 text-center">
+          <span className="text-xs font-bold uppercase tracking-widest text-brand-600">Program Kursus</span>
+          <h2 className="mt-2 text-2xl font-bold text-forest-950">Pilih Kategori untuk Belajar</h2>
         </div>
-        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-          {KATEGORI_PRODUK.map((kat) => {
+        <div className="grid grid-cols-2 gap-6 sm:grid-cols-3 lg:grid-cols-5">
+          {KATEGORI_PRODUK.slice(0, 10).map((kat, i) => {
             const Icon = ICONS[kat] ?? BookOpen;
+            const ringColors = ["ring-brand-200", "ring-sun-300", "ring-pink-200", "ring-sky-200", "ring-purple-200"];
+            const iconColors = ["text-brand-600 bg-brand-50", "text-sun-500 bg-sun-400/15", "text-pink-600 bg-pink-50", "text-sky-600 bg-sky-50", "text-purple-600 bg-purple-50"];
+            const c = i % 5;
             return (
-              <Link
-                key={kat}
-                href={`/program?kategori=${encodeURIComponent(kat)}`}
-                className="card flex flex-col items-center gap-2.5 p-5 text-center"
-              >
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-brand-50 text-brand-600">
-                  <Icon size={20} />
+              <Link key={kat} href={`/program?kategori=${encodeURIComponent(kat)}`} className="group flex flex-col items-center gap-2.5 text-center">
+                <span className={`flex h-16 w-16 items-center justify-center rounded-full ring-4 ${ringColors[c]} ${iconColors[c]} transition group-hover:scale-105`}>
+                  <Icon size={24} />
                 </span>
-                <span className="text-sm font-semibold text-ink-900">{kat}</span>
-                <span className="text-xs text-ink-500">{kategoriCountMap[kat] ?? 0} kelas</span>
+                <span className="text-xs font-semibold leading-tight text-ink-900 sm:text-sm">{kat}</span>
+                <span className="text-[11px] text-ink-500">{kategoriCountMap[kat] ?? 0} kelas</span>
               </Link>
             );
           })}
+        </div>
+        <div className="mt-10 flex justify-center">
+          <Link href="/program" className="btn-primary">
+            Lihat Semua Kategori <ArrowRight size={16} />
+          </Link>
         </div>
       </section>
 

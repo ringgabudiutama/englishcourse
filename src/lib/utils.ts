@@ -4,6 +4,17 @@ export function formatRupiah(value: number) {
   );
 }
 
+export function formatRupiahSingkat(value: number) {
+  if (value >= 1_000_000) {
+    const jt = value / 1_000_000;
+    return `${jt % 1 === 0 ? jt : jt.toFixed(1)}jt`;
+  }
+  if (value >= 1_000) {
+    return `${Math.round(value / 1_000)}rb`;
+  }
+  return String(value);
+}
+
 export function formatTanggal(date: Date | string) {
   const d = new Date(date);
   return d.toLocaleDateString("id-ID", { day: "numeric", month: "short", year: "numeric" });

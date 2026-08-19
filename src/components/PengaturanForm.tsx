@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import { ImagePlus, Loader2 } from "lucide-react";
 
 export type PengaturanData = {
   namaBrand: string;
@@ -12,6 +13,7 @@ export type PengaturanData = {
   alamat: string;
   jamOperasional: string;
   instagram: string;
+  heroFotoUrl: string;
   totalSiswa: string;
   totalMentor: string;
   tahunPengalaman: string;
@@ -21,9 +23,28 @@ export default function PengaturanForm({ initialData }: { initialData: Pengatura
   const router = useRouter();
   const [data, setData] = useState<PengaturanData>(initialData);
   const [submitting, setSubmitting] = useState(false);
+  const [uploading, setUploading] = useState(false);
 
   function set<K extends keyof PengaturanData>(key: K, value: PengaturanData[K]) {
     setData((d) => ({ ...d, [key]: value }));
+  }
+
+  async function handleFotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    const form = new FormData();
+    form.append("file", file);
+    form.append("folder", "hero");
+    const res = await fetch("/api/upload", { method: "POST", body: form });
+    const result = await res.json();
+    setUploading(false);
+    if (!res.ok) {
+      toast.error(result.error ?? "Gagal mengunggah foto");
+      return;
+    }
+    set("heroFotoUrl", result.url);
+    toast.success("Foto hero berhasil diunggah");
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -88,6 +109,28 @@ export default function PengaturanForm({ initialData }: { initialData: Pengatura
       </div>
 
       <div className="card p-6">
+        <h2 className="font-display text-base font-bold text-forest-950">Foto Hero (Landing Page)</h2>
+        <p className="mt-1 text-xs text-ink-500">
+          Pakai foto PNG dengan background transparan (background sudah dihapus) supaya menyatu bagus dengan halaman.
+        </p>
+        <div className="mt-4">
+          <label className="flex cursor-pointer flex-col items-center gap-2 rounded-lg border-2 border-dashed border-ink-100 px-4 py-8 text-center hover:border-brand-300">
+            {uploading ? <Loader2 size={22} className="animate-spin text-brand-500" /> : <ImagePlus size={22} className="text-ink-300" />}
+            <span className="text-xs text-ink-500">
+              {data.heroFotoUrl ? "Foto terunggah — klik untuk ganti" : "Klik untuk unggah foto (PNG transparan, maks 8MB)"}
+            </span>
+            <input type="file" accept="image/png,image/webp" className="hidden" onChange={handleFotoUpload} disabled={uploading} />
+          </label>
+          {data.heroFotoUrl && (
+            <div className="mt-3 flex justify-center rounded-lg bg-brand-50/60 p-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={data.heroFotoUrl} alt="Preview foto hero" className="max-h-64 object-contain" />
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="card p-6">
         <h2 className="font-display text-base font-bold text-forest-950">Info Kontak Tambahan</h2>
         <div className="mt-4 space-y-4">
           <div>
@@ -112,7 +155,7 @@ export default function PengaturanForm({ initialData }: { initialData: Pengatura
       </div>
 
       <div className="flex justify-end">
-        <button type="submit" disabled={submitting} className="btn-primary">
+        <button type="submit" disabled={submitting || uploading} className="btn-primary">
           {submitting ? "Menyimpan..." : "Simpan Pengaturan"}
         </button>
       </div>

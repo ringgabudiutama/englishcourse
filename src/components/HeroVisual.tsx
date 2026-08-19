@@ -1,65 +1,62 @@
-import { Mic, Headphones, BookOpen, Star, CheckCircle2 } from "lucide-react";
+import Image from "next/image";
+import { Users, Globe2, Languages, Sparkles } from "lucide-react";
 
-export default function HeroVisual() {
+const BADGES = [
+  { icon: Users, label: "Siswa Aktif", color: "bg-brand-600", position: "left-0 top-6 -translate-x-1/4" },
+  { icon: Sparkles, label: "Kelas Interaktif", color: "bg-pink-500", position: "right-0 top-24 translate-x-1/4" },
+  { icon: Globe2, label: "Mentor Berpengalaman", color: "bg-sun-500", position: "left-0 bottom-28 -translate-x-1/3" },
+  { icon: Languages, label: "Materi Lengkap", color: "bg-forest-700", position: "right-2 bottom-6 translate-x-1/5" },
+];
+
+export default function HeroVisual({
+  fotoUrl,
+  totalSiswa,
+  totalMentor,
+  tahunPengalaman,
+}: {
+  fotoUrl?: string | null;
+  totalSiswa: string;
+  totalMentor: string;
+  tahunPengalaman: string;
+}) {
+  const values = [totalSiswa, tahunPengalaman + " Th", totalMentor];
+
   return (
-    <div className="relative mx-auto hidden aspect-square w-full max-w-md lg:block">
-      <div className="absolute inset-0 rounded-full bg-brand-200/30 blur-3xl" />
+    <div className="relative mx-auto aspect-[4/5] w-full max-w-sm sm:max-w-md">
+      {/* decorative rings */}
+      <div className="absolute inset-0 -z-10 flex items-center justify-center">
+        <div className="h-[85%] w-[85%] rounded-full border-2 border-dashed border-brand-200" />
+      </div>
+      <div className="absolute inset-6 -z-10 rounded-full bg-brand-100/60" />
 
-      {/* main mock card: lesson progress */}
-      <div className="absolute inset-x-6 top-8 bottom-20 rounded-2xl border border-forest-800/10 bg-white p-5 shadow-card-hover">
-        <div className="flex items-center justify-between">
-          <span className="badge bg-brand-50 text-brand-700">Speaking Class</span>
-          <div className="flex gap-0.5 text-sun-400">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <Star key={i} size={12} fill="currentColor" />
-            ))}
+      {/* photo or fallback */}
+      <div className="relative mx-auto h-full w-full">
+        {fotoUrl ? (
+          <Image src={fotoUrl} alt="Siswa EnglishKu" fill className="object-contain object-bottom" priority />
+        ) : (
+          <div className="flex h-full items-center justify-center">
+            <div className="flex h-56 w-56 items-center justify-center rounded-full bg-gradient-to-br from-brand-400 to-brand-600 text-white shadow-card-hover">
+              <span className="font-display text-5xl font-extrabold">EK</span>
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* floating stat badges */}
+      {BADGES.slice(0, 3).map((b, i) => (
+        <div
+          key={b.label}
+          className={`absolute ${b.position} flex items-center gap-2.5 rounded-xl bg-white px-3.5 py-2.5 shadow-card-hover`}
+        >
+          <span className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full ${b.color} text-white`}>
+            <b.icon size={15} />
+          </span>
+          <div>
+            <p className="text-xs font-extrabold text-ink-900">{values[i]}</p>
+            <p className="text-[10px] text-ink-500">{b.label}</p>
           </div>
         </div>
-
-        <div className="mt-5 space-y-3">
-          {[
-            { icon: Mic, label: "Pronunciation", w: 88 },
-            { icon: Headphones, label: "Listening", w: 72 },
-            { icon: BookOpen, label: "Vocabulary", w: 95 },
-          ].map((row, i) => (
-            <div key={i} className="rounded-xl border border-ink-100 bg-ink-100/40 p-3">
-              <div className="flex items-center gap-2 text-xs font-semibold text-ink-700">
-                <row.icon size={14} className="text-brand-600" /> {row.label}
-              </div>
-              <div className="mt-2 h-1.5 w-full overflow-hidden rounded-full bg-white">
-                <div className="h-full rounded-full bg-gradient-to-r from-brand-500 to-brand-400" style={{ width: `${row.w}%` }} />
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="mt-5 flex items-center gap-2 text-[11px] text-ink-500">
-          <CheckCircle2 size={13} className="text-brand-600" /> Progress belajar minggu ini
-        </div>
-      </div>
-
-      {/* floating: kelas selesai */}
-      <div className="absolute -left-4 top-6 flex items-center gap-2.5 rounded-xl border border-ink-100 bg-white px-3.5 py-2.5 shadow-card-hover">
-        <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-brand-50 text-brand-600">
-          <CheckCircle2 size={16} />
-        </span>
-        <div>
-          <p className="text-xs font-semibold text-ink-900">Kelas Selesai</p>
-          <p className="text-[10px] text-ink-500">Sertifikat otomatis</p>
-        </div>
-      </div>
-
-      {/* floating: rating */}
-      <div className="absolute -right-3 bottom-6 max-w-[190px] rounded-xl border border-ink-100 bg-white px-4 py-3 shadow-card-hover">
-        <div className="flex gap-0.5 text-sun-400">
-          {Array.from({ length: 5 }).map((_, i) => (
-            <Star key={i} size={11} fill="currentColor" />
-          ))}
-        </div>
-        <p className="mt-1.5 text-xs leading-snug text-ink-700">
-          &ldquo;Speaking makin lancar cuma dalam 2 bulan.&rdquo;
-        </p>
-      </div>
+      ))}
     </div>
   );
 }
