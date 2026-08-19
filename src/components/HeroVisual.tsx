@@ -2,10 +2,10 @@ import Image from "next/image";
 import { Users, Globe2, Languages, Sparkles } from "lucide-react";
 
 const BADGES = [
-  { icon: Users, label: "Siswa Aktif", color: "bg-brand-600", position: "left-0 top-6 -translate-x-1/4" },
-  { icon: Sparkles, label: "Kelas Interaktif", color: "bg-pink-500", position: "right-0 top-24 translate-x-1/4" },
-  { icon: Globe2, label: "Mentor Berpengalaman", color: "bg-sun-500", position: "left-0 bottom-28 -translate-x-1/3" },
-  { icon: Languages, label: "Materi Lengkap", color: "bg-forest-700", position: "right-2 bottom-6 translate-x-1/5" },
+  { icon: Users, label: "Siswa Aktif", color: "bg-brand-600", position: "left-0 top-6 -translate-x-[8%] sm:-translate-x-1/4" },
+  { icon: Sparkles, label: "Kelas Interaktif", color: "bg-pink-500", position: "right-0 top-24 translate-x-[8%] sm:translate-x-1/4" },
+  { icon: Globe2, label: "Mentor Berpengalaman", color: "bg-sun-500", position: "left-0 bottom-28 -translate-x-[10%] sm:-translate-x-1/3" },
+  { icon: Languages, label: "Materi Lengkap", color: "bg-forest-700", position: "right-2 bottom-6 translate-x-[5%]" },
 ];
 
 export default function HeroVisual({
