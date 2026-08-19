@@ -57,9 +57,9 @@ export default async function HomePage() {
       {/* HERO */}
       <section className="relative overflow-hidden bg-[#FBF8F2] px-4 pb-14 pt-10 sm:px-6 sm:pt-14">
         <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden">
-          <div className="animate-blob-a absolute -left-28 -top-32 h-[420px] w-[420px] rounded-full bg-brand-300/50 blur-3xl" />
-          <div className="animate-blob-b absolute -right-24 -top-10 h-[380px] w-[380px] rounded-full bg-sun-400/40 blur-3xl" />
-          <div className="animate-blob-c absolute -bottom-32 left-1/4 h-[360px] w-[360px] rounded-full bg-brand-500/25 blur-3xl" />
+          <div className="animate-blob-a absolute -left-16 -top-24 h-[440px] w-[440px] rounded-full bg-brand-400/70 blur-2xl" />
+          <div className="animate-blob-b absolute -right-10 top-0 h-[400px] w-[400px] rounded-full bg-sun-400/65 blur-2xl" />
+          <div className="animate-blob-c absolute -bottom-24 left-1/4 h-[380px] w-[380px] rounded-full bg-brand-600/45 blur-2xl" />
         </div>
         <div className="absolute inset-0 bg-dot-grid bg-dot-sm opacity-20" />
         <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-2">
