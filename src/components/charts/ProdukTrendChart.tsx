@@ -18,8 +18,8 @@ export default function ProdukTrendChart({ data }: { data: TrendPoint[] }) {
           <AreaChart data={data} margin={{ top: 8, right: 8, left: -20, bottom: 0 }}>
             <defs>
               <linearGradient id="trendFillGreen" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#059669" stopOpacity={0.35} />
-                <stop offset="100%" stopColor="#059669" stopOpacity={0} />
+                <stop offset="0%" stopColor="#D4152C" stopOpacity={0.35} />
+                <stop offset="100%" stopColor="#D4152C" stopOpacity={0} />
               </linearGradient>
             </defs>
             <CartesianGrid vertical={false} stroke="#F1F5F2" />
@@ -30,7 +30,7 @@ export default function ProdukTrendChart({ data }: { data: TrendPoint[] }) {
               labelStyle={{ fontWeight: 600, color: "#0B1220" }}
               formatter={(value: number) => [`${value} produk`, "Total"]}
             />
-            <Area type="monotone" dataKey="total" stroke="#059669" strokeWidth={2.5} fill="url(#trendFillGreen)" />
+            <Area type="monotone" dataKey="total" stroke="#D4152C" strokeWidth={2.5} fill="url(#trendFillGreen)" />
           </AreaChart>
         </ResponsiveContainer>
       )}

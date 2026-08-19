@@ -4,7 +4,7 @@ import { RadialBarChart, RadialBar, PolarAngleAxis } from "recharts";
 
 export default function PublishGauge({ percent, label }: { percent: number; label: string }) {
   const clamped = Math.max(0, Math.min(100, Math.round(percent)));
-  const data = [{ name: "publish", value: clamped, fill: "#059669" }];
+  const data = [{ name: "publish", value: clamped, fill: "#D4152C" }];
 
   return (
     <div className="flex flex-col items-center justify-center">

@@ -70,7 +70,6 @@ model SiteConfig {
   alamat         String?
   jamOperasional String?  @default("Senin - Sabtu, 09.00 - 20.00")
   instagram      String?
-  logoUrl        String?
   heroFotoUrl    String?
   totalSiswa     String   @default("500+")
   totalMentor    String   @default("15+")

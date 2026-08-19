@@ -8,7 +8,7 @@ export default function ToasterProvider() {
       position="top-center"
       toastOptions={{
         style: {
-          background: "#07402E",
+          background: "#200608",
           color: "#fff",
           fontSize: "14px",
           borderRadius: "10px",

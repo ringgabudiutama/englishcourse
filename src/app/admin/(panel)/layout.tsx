@@ -3,18 +3,17 @@ import MobileNav from "@/components/MobileNav";
 import LogoutButton from "@/components/LogoutButton";
 import Logo from "@/components/Logo";
 import { getSession } from "@/lib/auth";
-import { getSiteConfig } from "@/lib/siteConfig";
 
 export default async function AdminPanelLayout({ children }: { children: React.ReactNode }) {
-  const [session, config] = await Promise.all([getSession(), getSiteConfig()]);
+  const session = await getSession();
 
   return (
     <div className="flex min-h-screen bg-ink-100">
-      <Sidebar logoUrl={config.logoUrl} namaBrand={config.namaBrand} />
+      <Sidebar />
       <div className="flex min-w-0 flex-1 flex-col pb-16 lg:pb-0">
         <header className="flex h-16 items-center justify-between border-b border-ink-100 bg-white px-4 sm:px-6">
           <div className="lg:hidden">
-            <Logo size="sm" logoUrl={config.logoUrl} namaBrand={config.namaBrand} />
+            <Logo size="sm" />
           </div>
           <div className="ml-auto flex items-center gap-4">
             <div className="text-right">

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Clock, Star, BarChart3 } from "lucide-react";
+import { Clock, Star, BarChart3, ArrowUpRight } from "lucide-react";
 import { LEVEL_LABEL } from "@/lib/categories";
 import { formatRupiah, formatRupiahSingkat, diskonPersen } from "@/lib/utils";
 
@@ -18,15 +18,15 @@ type Props = {
 
 const KATEGORI_COLOR: Record<string, string> = {
   Speaking: "bg-brand-600",
-  Listening: "bg-sky-500",
-  Vocabulary: "bg-purple-500",
-  Grammar: "bg-forest-700",
-  Writing: "bg-pink-500",
-  Reading: "bg-sun-500",
-  Conversation: "bg-brand-600",
-  "TOEFL / IELTS Preparation": "bg-red-500",
-  "Business English": "bg-forest-800",
-  "English for Kids": "bg-pink-500",
+  Listening: "bg-forest-700",
+  Vocabulary: "bg-sun-500",
+  Grammar: "bg-brand-800",
+  Writing: "bg-forest-800",
+  Reading: "bg-sun-600",
+  Conversation: "bg-brand-500",
+  "TOEFL / IELTS Preparation": "bg-forest-950",
+  "Business English": "bg-brand-900",
+  "English for Kids": "bg-sun-400",
 };
 
 export default function ProdukCard(props: Props) {
@@ -48,15 +48,21 @@ export default function ProdukCard(props: Props) {
             <span className="font-display text-3xl font-extrabold">{props.nama.slice(0, 2).toUpperCase()}</span>
           </div>
         )}
+        <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-forest-950/55 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
         <span className={`badge absolute left-3 top-3 ${kategoriColor} text-white`}>{props.kategori}</span>
         {props.populer && (
-          <span className="badge absolute right-3 top-3 bg-sun-400 text-forest-950">
+          <span className="badge absolute right-3 top-3 bg-sun-400 text-white">
             <Star size={11} className="mr-1" fill="currentColor" /> Populer
           </span>
         )}
 
+        {/* arrow button, appears on hover like a "view detail" affordance */}
+        <span className="absolute bottom-3 right-3 flex h-9 w-9 translate-y-2 items-center justify-center rounded-full bg-white text-brand-600 opacity-0 shadow-card-hover transition duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+          <ArrowUpRight size={16} />
+        </span>
+
         {/* price badge, circular, bottom-right overlapping the image */}
-        <div className="absolute -bottom-5 right-4 flex h-16 w-16 flex-col items-center justify-center rounded-full border-4 border-white bg-forest-900 text-center shadow-card-hover">
+        <div className="absolute -bottom-5 left-4 flex h-16 w-16 flex-col items-center justify-center rounded-full border-4 border-white bg-forest-950 text-center shadow-card-hover">
           {diskon ? (
             <span className="text-[10px] font-extrabold leading-none text-sun-300">-{diskon}%</span>
           ) : null}
