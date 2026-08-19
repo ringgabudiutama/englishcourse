@@ -12,7 +12,7 @@ export default async function Navbar() {
       <div className="border-b border-ink-100">
         <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-3.5 sm:px-6">
           <Link href="/">
-            <Logo />
+            <Logo logoUrl={config.logoUrl} namaBrand={config.namaBrand} />
           </Link>
 
           <nav className="hidden items-center gap-7 md:flex">

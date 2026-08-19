@@ -13,6 +13,7 @@ export type PengaturanData = {
   alamat: string;
   jamOperasional: string;
   instagram: string;
+  logoUrl: string;
   heroFotoUrl: string;
   totalSiswa: string;
   totalMentor: string;
@@ -24,9 +25,28 @@ export default function PengaturanForm({ initialData }: { initialData: Pengatura
   const [data, setData] = useState<PengaturanData>(initialData);
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
 
   function set<K extends keyof PengaturanData>(key: K, value: PengaturanData[K]) {
     setData((d) => ({ ...d, [key]: value }));
+  }
+
+  async function handleLogoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingLogo(true);
+    const form = new FormData();
+    form.append("file", file);
+    form.append("folder", "logo");
+    const res = await fetch("/api/upload", { method: "POST", body: form });
+    const result = await res.json();
+    setUploadingLogo(false);
+    if (!res.ok) {
+      toast.error(result.error ?? "Gagal mengunggah logo");
+      return;
+    }
+    set("logoUrl", result.url);
+    toast.success("Logo berhasil diunggah");
   }
 
   async function handleFotoUpload(e: React.ChangeEvent<HTMLInputElement>) {
@@ -86,6 +106,38 @@ export default function PengaturanForm({ initialData }: { initialData: Pengatura
           <div>
             <label className="label-field">Tagline</label>
             <input required value={data.tagline} onChange={(e) => set("tagline", e.target.value)} className="input-field" />
+          </div>
+          <div>
+            <label className="label-field">Logo</label>
+            <p className="mb-2 text-xs text-ink-500">
+              Dipakai di header, footer, dan panel admin. Kosongkan untuk pakai logo bawaan EnglishKu.
+            </p>
+            <div className="flex items-center gap-4">
+              <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg border border-ink-100 bg-ink-100/40 p-2">
+                {data.logoUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={data.logoUrl} alt="Preview logo" className="h-full w-full object-contain" />
+                ) : (
+                  <span className="text-[10px] text-ink-300">Bawaan</span>
+                )}
+              </div>
+              <label className="flex flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-ink-100 px-4 py-3 text-center hover:border-brand-300">
+                {uploadingLogo ? <Loader2 size={18} className="animate-spin text-brand-500" /> : <ImagePlus size={18} className="text-ink-300" />}
+                <span className="text-xs text-ink-500">
+                  {data.logoUrl ? "Klik untuk ganti logo" : "Klik untuk unggah logo (PNG/SVG transparan)"}
+                </span>
+                <input type="file" accept="image/png,image/svg+xml,image/webp" className="hidden" onChange={handleLogoUpload} disabled={uploadingLogo} />
+              </label>
+              {data.logoUrl && (
+                <button
+                  type="button"
+                  onClick={() => set("logoUrl", "")}
+                  className="shrink-0 text-xs font-medium text-ink-500 hover:text-red-600"
+                >
+                  Hapus
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -155,7 +207,7 @@ export default function PengaturanForm({ initialData }: { initialData: Pengatura
       </div>
 
       <div className="flex justify-end">
-        <button type="submit" disabled={submitting || uploading} className="btn-primary">
+        <button type="submit" disabled={submitting || uploading || uploadingLogo} className="btn-primary">
           {submitting ? "Menyimpan..." : "Simpan Pengaturan"}
         </button>
       </div>

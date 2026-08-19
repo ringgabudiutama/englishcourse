@@ -12,13 +12,19 @@ const links = [
   { href: "/admin/pengaturan", label: "Pengaturan", icon: Settings },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({
+  logoUrl,
+  namaBrand,
+}: {
+  logoUrl?: string | null;
+  namaBrand?: string | null;
+}) {
   const pathname = usePathname();
 
   return (
     <aside className="hidden w-60 shrink-0 border-r border-ink-100 bg-white lg:block">
       <div className="flex h-16 items-center gap-1.5 border-b border-ink-100 px-6">
-        <Logo size="sm" />
+        <Logo size="sm" logoUrl={logoUrl} namaBrand={namaBrand} />
         <span className="ml-auto rounded bg-ink-100 px-1.5 py-0.5 text-[10px] font-semibold text-ink-500">
           ADMIN
         </span>

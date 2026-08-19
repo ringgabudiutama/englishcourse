@@ -56,7 +56,12 @@ export default async function HomePage() {
 
       {/* HERO */}
       <section className="relative overflow-hidden bg-[#FBF8F2] px-4 pb-14 pt-10 sm:px-6 sm:pt-14">
-        <div className="absolute inset-0 bg-dot-grid bg-dot-sm opacity-30" />
+        <div className="pointer-events-none absolute inset-0 -z-20 overflow-hidden">
+          <div className="animate-blob-a absolute -left-28 -top-32 h-[420px] w-[420px] rounded-full bg-brand-300/50 blur-3xl" />
+          <div className="animate-blob-b absolute -right-24 -top-10 h-[380px] w-[380px] rounded-full bg-sun-400/40 blur-3xl" />
+          <div className="animate-blob-c absolute -bottom-32 left-1/4 h-[360px] w-[360px] rounded-full bg-brand-500/25 blur-3xl" />
+        </div>
+        <div className="absolute inset-0 bg-dot-grid bg-dot-sm opacity-20" />
         <div className="relative mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-2">
           <div>
             <span className="badge border border-brand-200 bg-white text-brand-700">

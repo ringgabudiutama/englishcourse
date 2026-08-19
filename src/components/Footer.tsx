@@ -11,7 +11,7 @@ export default async function Footer() {
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
         <div className="grid grid-cols-2 gap-10 sm:grid-cols-4">
           <div className="col-span-2 sm:col-span-1">
-            <Logo onDark />
+            <Logo onDark logoUrl={config.logoUrl} namaBrand={config.namaBrand} />
             <p className="mt-3 text-sm leading-relaxed text-ink-300/80">{config.tagline}</p>
           </div>
           <div>

@@ -1,12 +1,29 @@
 export default function Logo({
   size = "md",
   onDark = false,
+  logoUrl,
+  namaBrand,
 }: {
   size?: "sm" | "md" | "lg";
   onDark?: boolean;
+  logoUrl?: string | null;
+  namaBrand?: string | null;
 }) {
   const dims = { sm: 26, md: 30, lg: 36 }[size];
   const textSize = { sm: "text-base", md: "text-lg", lg: "text-2xl" }[size];
+
+  if (logoUrl) {
+    return (
+      <span className="inline-flex items-center" style={{ height: dims * 1.6 }}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={logoUrl} alt={namaBrand ?? "Logo"} className="h-full w-auto object-contain" />
+      </span>
+    );
+  }
+
+  const brand = namaBrand ?? "EnglishKu";
+  const brandMain = brand.length > 2 ? brand.slice(0, -2) : brand;
+  const brandTail = brand.length > 2 ? brand.slice(-2) : "";
 
   return (
     <span className="inline-flex items-center gap-2">
@@ -27,7 +44,7 @@ export default function Logo({
         </defs>
       </svg>
       <span className={`font-display ${textSize} font-extrabold ${onDark ? "text-white" : "text-forest-900"}`}>
-        English<span className="text-brand-500">Ku</span>
+        {brandMain}<span className="text-brand-500">{brandTail}</span>
       </span>
     </span>
   );

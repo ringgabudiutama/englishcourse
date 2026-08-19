@@ -14,6 +14,7 @@ export async function getSiteConfig() {
     alamat: null as string | null,
     jamOperasional: "Senin - Sabtu, 09.00 - 20.00",
     instagram: null as string | null,
+    logoUrl: null as string | null,
     heroFotoUrl: null as string | null,
     totalSiswa: "500+",
     totalMentor: "15+",
