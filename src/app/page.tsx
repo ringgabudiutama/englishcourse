@@ -177,12 +177,12 @@ export default async function HomePage() {
           <span className="text-xs font-bold uppercase tracking-widest text-brand-600">— Program Unggulan —</span>
           <h2 className="mt-2 text-2xl font-bold text-ink-900 sm:text-3xl">Kelas yang Dirancang untuk Hasil Nyata</h2>
         </div>
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="scroll-row -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
           {LAYANAN.map((l) => (
             <Link
               key={l.title}
               href={`/program?kategori=${encodeURIComponent(l.kategori)}`}
-              className={`group flex flex-col rounded-xl2 p-6 shadow-card transition hover:-translate-y-1 hover:shadow-card-hover ${
+              className={`group flex w-[78%] shrink-0 snap-start flex-col rounded-xl2 p-6 shadow-card transition hover:-translate-y-1 hover:shadow-card-hover sm:w-auto sm:shrink ${
                 l.highlight ? "bg-brand-600 text-white" : "bg-brand-50/60 text-ink-900"
               }`}
             >
@@ -285,9 +285,9 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="mt-10 grid grid-cols-1 items-center gap-8 lg:grid-cols-[1fr_1.1fr_1fr]">
+          <div className="scroll-row -mx-4 mt-10 flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-4 pb-2 lg:mx-0 lg:grid lg:grid-cols-[1fr_1.1fr_1fr] lg:items-center lg:gap-8 lg:overflow-visible lg:px-0 lg:pb-0">
             {/* illustrative panel, left */}
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl2 bg-gradient-to-br from-brand-500 to-brand-700 shadow-card">
+            <div className="relative aspect-[4/5] w-[78%] shrink-0 snap-start overflow-hidden rounded-xl2 bg-gradient-to-br from-brand-500 to-brand-700 shadow-card sm:w-[46%] lg:w-full lg:shrink">
               <div className="absolute inset-0 bg-dot-grid bg-dot-sm opacity-20" />
               <div className="flex h-full flex-col items-center justify-center gap-3 p-6 text-center text-white">
                 <MessageSquare size={40} className="opacity-90" />
@@ -297,7 +297,7 @@ export default async function HomePage() {
             </div>
 
             {/* feature list, middle */}
-            <div className="flex flex-col gap-5">
+            <div className="flex w-[78%] shrink-0 snap-start flex-col gap-5 sm:w-[46%] lg:w-full lg:shrink">
               <FeatureRow icon={GraduationCap} color="bg-brand-600" title="Mentor Bersertifikat" desc="Dibimbing mentor berpengalaman dan bersertifikat resmi di bidangnya." />
               <FeatureRow icon={Users} color="bg-sun-500" title="Kelas Kecil & Interaktif" desc="Fokus pada praktik langsung dengan jumlah siswa terbatas per kelas." />
               <FeatureRow icon={Award} color="bg-forest-800" title="Sertifikat Resmi" desc="Dapatkan sertifikat setelah menyelesaikan setiap program kursus." />
@@ -315,7 +315,7 @@ export default async function HomePage() {
             </div>
 
             {/* illustrative panel, right */}
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-xl2 bg-gradient-to-br from-forest-800 to-forest-950 shadow-card">
+            <div className="relative aspect-[4/5] w-[78%] shrink-0 snap-start overflow-hidden rounded-xl2 bg-gradient-to-br from-forest-800 to-forest-950 shadow-card sm:w-[46%] lg:w-full lg:shrink">
               <div className="absolute inset-0 bg-dot-grid bg-dot-sm opacity-20" />
               <div className="flex h-full flex-col items-center justify-center gap-3 p-6 text-center text-white">
                 <GraduationCap size={40} className="opacity-90" />
@@ -346,9 +346,11 @@ export default async function HomePage() {
               Belum ada program yang dipublikasikan.
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="scroll-row -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3">
               {ditampilkan.map((p) => (
-                <ProdukCard key={p.id} {...p} />
+                <div key={p.id} className="w-[78%] shrink-0 snap-start sm:w-auto sm:shrink">
+                  <ProdukCard {...p} />
+                </div>
               ))}
             </div>
           )}

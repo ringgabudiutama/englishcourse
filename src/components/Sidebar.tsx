@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, PlusCircle, ListChecks, Settings } from "lucide-react";
+import { LayoutDashboard, PlusCircle, ListChecks, Settings, UserCircle } from "lucide-react";
 import Logo from "@/components/Logo";
 
 const links = [
@@ -10,15 +10,16 @@ const links = [
   { href: "/admin/produk/tambah", label: "Tambah Produk", icon: PlusCircle },
   { href: "/admin/produk", label: "Kelola Produk", icon: ListChecks },
   { href: "/admin/pengaturan", label: "Pengaturan", icon: Settings },
+  { href: "/admin/akun", label: "Akun Saya", icon: UserCircle },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ logoUrl, brandName }: { logoUrl?: string | null; brandName?: string | null }) {
   const pathname = usePathname();
 
   return (
     <aside className="hidden w-60 shrink-0 border-r border-ink-100 bg-white lg:block">
       <div className="flex h-16 items-center gap-1.5 border-b border-ink-100 px-6">
-        <Logo size="sm" />
+        <Logo size="sm" url={logoUrl} name={brandName} />
         <span className="ml-auto rounded bg-ink-100 px-1.5 py-0.5 text-[10px] font-semibold text-ink-500">
           ADMIN
         </span>

@@ -67,6 +67,15 @@
     );
     background-size: 200px 200px;
   }
+
+  /* ---- mobile card rows: same-size cards as desktop, swipe instead of stacking ---- */
+  .scroll-row {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .scroll-row::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -2,19 +2,20 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, PlusCircle, ListChecks, Settings } from "lucide-react";
+import { LayoutDashboard, PlusCircle, ListChecks, Settings, UserCircle } from "lucide-react";
 
 const links = [
   { href: "/admin/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/admin/produk/tambah", label: "Tambah", icon: PlusCircle },
   { href: "/admin/produk", label: "Produk", icon: ListChecks },
   { href: "/admin/pengaturan", label: "Atur", icon: Settings },
+  { href: "/admin/akun", label: "Akun", icon: UserCircle },
 ];
 
 export default function MobileNav() {
   const pathname = usePathname();
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-4 border-t border-ink-100 bg-white lg:hidden">
+    <nav className="fixed inset-x-0 bottom-0 z-40 grid grid-cols-5 border-t border-ink-100 bg-white lg:hidden">
       {links.map((link) => {
         const Icon = link.icon;
         let isActive = pathname === link.href;

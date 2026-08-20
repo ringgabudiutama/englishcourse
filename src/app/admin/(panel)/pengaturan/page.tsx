@@ -23,6 +23,7 @@ export default async function PengaturanPage() {
             jamOperasional: config?.jamOperasional ?? "",
             instagram: config?.instagram ?? "",
             heroFotoUrl: config?.heroFotoUrl ?? "",
+            logoUrl: config?.logoUrl ?? "",
             totalSiswa: config?.totalSiswa ?? "500+",
             totalMentor: config?.totalMentor ?? "15+",
             tahunPengalaman: config?.tahunPengalaman ?? "8+",

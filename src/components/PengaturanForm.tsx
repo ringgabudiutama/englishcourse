@@ -14,6 +14,7 @@ export type PengaturanData = {
   jamOperasional: string;
   instagram: string;
   heroFotoUrl: string;
+  logoUrl: string;
   totalSiswa: string;
   totalMentor: string;
   tahunPengalaman: string;
@@ -24,6 +25,7 @@ export default function PengaturanForm({ initialData }: { initialData: Pengatura
   const [data, setData] = useState<PengaturanData>(initialData);
   const [submitting, setSubmitting] = useState(false);
   const [uploading, setUploading] = useState(false);
+  const [uploadingLogo, setUploadingLogo] = useState(false);
 
   function set<K extends keyof PengaturanData>(key: K, value: PengaturanData[K]) {
     setData((d) => ({ ...d, [key]: value }));
@@ -45,6 +47,24 @@ export default function PengaturanForm({ initialData }: { initialData: Pengatura
     }
     set("heroFotoUrl", result.url);
     toast.success("Foto hero berhasil diunggah");
+  }
+
+  async function handleLogoUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploadingLogo(true);
+    const form = new FormData();
+    form.append("file", file);
+    form.append("folder", "logo");
+    const res = await fetch("/api/upload", { method: "POST", body: form });
+    const result = await res.json();
+    setUploadingLogo(false);
+    if (!res.ok) {
+      toast.error(result.error ?? "Gagal mengunggah logo");
+      return;
+    }
+    set("logoUrl", result.url);
+    toast.success("Logo berhasil diunggah");
   }
 
   async function handleSubmit(e: React.FormEvent) {
@@ -86,6 +106,30 @@ export default function PengaturanForm({ initialData }: { initialData: Pengatura
           <div>
             <label className="label-field">Tagline</label>
             <input required value={data.tagline} onChange={(e) => set("tagline", e.target.value)} className="input-field" />
+          </div>
+        </div>
+
+        <div className="mt-5">
+          <label className="label-field">Logo Website</label>
+          <p className="mb-2 -mt-1 text-xs text-ink-500">
+            Tampil di navbar, footer, dan halaman admin. Pakai PNG/SVG persegi dengan background transparan untuk hasil terbaik.
+          </p>
+          <div className="flex items-center gap-4">
+            <div className="flex h-16 w-16 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-dashed border-ink-100 bg-ink-100/40">
+              {data.logoUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img src={data.logoUrl} alt="Preview logo" className="h-full w-full object-contain p-1.5" />
+              ) : (
+                <ImagePlus size={18} className="text-ink-300" />
+              )}
+            </div>
+            <label className="flex-1 cursor-pointer rounded-lg border-2 border-dashed border-ink-100 px-4 py-3 text-center hover:border-brand-300">
+              <span className="flex items-center justify-center gap-2 text-xs text-ink-500">
+                {uploadingLogo ? <Loader2 size={16} className="animate-spin text-brand-500" /> : <ImagePlus size={16} className="text-ink-300" />}
+                {data.logoUrl ? "Klik untuk ganti logo" : "Klik untuk unggah logo (maks 8MB)"}
+              </span>
+              <input type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" className="hidden" onChange={handleLogoUpload} disabled={uploadingLogo} />
+            </label>
           </div>
         </div>
       </div>
@@ -155,7 +199,7 @@ export default function PengaturanForm({ initialData }: { initialData: Pengatura
       </div>
 
       <div className="flex justify-end">
-        <button type="submit" disabled={submitting || uploading} className="btn-primary">
+        <button type="submit" disabled={submitting || uploading || uploadingLogo} className="btn-primary">
           {submitting ? "Menyimpan..." : "Simpan Pengaturan"}
         </button>
       </div>
