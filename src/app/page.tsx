@@ -177,22 +177,24 @@ export default async function HomePage() {
           <span className="text-xs font-bold uppercase tracking-widest text-brand-600">— Program Unggulan —</span>
           <h2 className="mt-2 text-2xl font-bold text-ink-900 sm:text-3xl">Kelas yang Dirancang untuk Hasil Nyata</h2>
         </div>
-        <div className="scroll-row -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-4">
+        <div className="grid grid-cols-2 gap-2.5 sm:gap-5 lg:grid-cols-4">
           {LAYANAN.map((l) => (
             <Link
               key={l.title}
               href={`/program?kategori=${encodeURIComponent(l.kategori)}`}
-              className={`group flex w-[78%] shrink-0 snap-start flex-col rounded-xl2 p-6 shadow-card transition hover:-translate-y-1 hover:shadow-card-hover sm:w-auto sm:shrink ${
+              className={`group flex flex-col rounded-lg p-2.5 shadow-card transition hover:-translate-y-1 hover:shadow-card-hover sm:rounded-xl2 sm:p-6 ${
                 l.highlight ? "bg-brand-600 text-white" : "bg-brand-50/60 text-ink-900"
               }`}
             >
-              <span className={`flex h-11 w-11 items-center justify-center rounded-xl ${l.highlight ? "bg-white/15 text-white" : "bg-white text-brand-600"}`}>
-                <l.icon size={20} />
+              <span className={`flex h-7 w-7 items-center justify-center rounded-lg sm:h-11 sm:w-11 sm:rounded-xl ${l.highlight ? "bg-white/15 text-white" : "bg-white text-brand-600"}`}>
+                <l.icon size={14} className="sm:hidden" />
+                <l.icon size={20} className="hidden sm:block" />
               </span>
-              <h3 className="mt-4 font-display text-base font-bold">{l.title}</h3>
-              <p className={`mt-1.5 text-sm leading-relaxed ${l.highlight ? "text-white/80" : "text-ink-500"}`}>{l.desc}</p>
-              <span className={`mt-4 inline-flex items-center gap-1 text-xs font-bold ${l.highlight ? "text-white" : "text-brand-600"}`}>
-                Selengkapnya <ArrowRight size={13} className="transition group-hover:translate-x-1" />
+              <h3 className="mt-2 font-display text-[11px] font-bold leading-tight sm:mt-4 sm:text-base">{l.title}</h3>
+              <p className={`mt-1 line-clamp-2 text-[10px] leading-snug sm:mt-1.5 sm:line-clamp-none sm:text-sm sm:leading-relaxed ${l.highlight ? "text-white/80" : "text-ink-500"}`}>{l.desc}</p>
+              <span className={`mt-1.5 inline-flex items-center gap-1 text-[10px] font-bold sm:mt-4 sm:text-xs ${l.highlight ? "text-white" : "text-brand-600"}`}>
+                Selengkapnya <ArrowRight size={11} className="transition group-hover:translate-x-1 sm:hidden" />
+                <ArrowRight size={13} className="hidden transition group-hover:translate-x-1 sm:block" />
               </span>
             </Link>
           ))}
@@ -285,19 +287,20 @@ export default async function HomePage() {
             </div>
           </div>
 
-          <div className="scroll-row -mx-4 mt-10 flex snap-x snap-mandatory items-stretch gap-6 overflow-x-auto px-4 pb-2 lg:mx-0 lg:grid lg:grid-cols-[1fr_1.1fr_1fr] lg:items-center lg:gap-8 lg:overflow-visible lg:px-0 lg:pb-0">
+          <div className="mt-6 grid grid-cols-3 items-stretch gap-2.5 sm:mt-10 sm:gap-4 lg:grid-cols-[1fr_1.1fr_1fr] lg:items-center lg:gap-8">
             {/* illustrative panel, left */}
-            <div className="relative aspect-[4/5] w-[78%] shrink-0 snap-start overflow-hidden rounded-xl2 bg-gradient-to-br from-brand-500 to-brand-700 shadow-card sm:w-[46%] lg:w-full lg:shrink">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-gradient-to-br from-brand-500 to-brand-700 shadow-card sm:rounded-xl2">
               <div className="absolute inset-0 bg-dot-grid bg-dot-sm opacity-20" />
-              <div className="flex h-full flex-col items-center justify-center gap-3 p-6 text-center text-white">
-                <MessageSquare size={40} className="opacity-90" />
-                <p className="font-display text-lg font-bold">Praktik Langsung</p>
-                <p className="text-xs text-white/75">Latihan percakapan nyata setiap sesi</p>
+              <div className="flex h-full flex-col items-center justify-center gap-1 p-1.5 text-center text-white sm:gap-3 sm:p-6">
+                <MessageSquare size={16} className="opacity-90 sm:hidden" />
+                <MessageSquare size={40} className="hidden opacity-90 sm:block" />
+                <p className="font-display text-[10px] font-bold leading-tight sm:text-lg">Praktik Langsung</p>
+                <p className="hidden text-xs text-white/75 sm:block">Latihan percakapan nyata setiap sesi</p>
               </div>
             </div>
 
             {/* feature list, middle */}
-            <div className="flex w-[78%] shrink-0 snap-start flex-col gap-5 sm:w-[46%] lg:w-full lg:shrink">
+            <div className="flex flex-col gap-1.5 sm:gap-5">
               <FeatureRow icon={GraduationCap} color="bg-brand-600" title="Mentor Bersertifikat" desc="Dibimbing mentor berpengalaman dan bersertifikat resmi di bidangnya." />
               <FeatureRow icon={Users} color="bg-sun-500" title="Kelas Kecil & Interaktif" desc="Fokus pada praktik langsung dengan jumlah siswa terbatas per kelas." />
               <FeatureRow icon={Award} color="bg-forest-800" title="Sertifikat Resmi" desc="Dapatkan sertifikat setelah menyelesaikan setiap program kursus." />
@@ -305,22 +308,24 @@ export default async function HomePage() {
                 href={waLink(config.whatsappAdmin, "Halo, saya ingin konsultasi kursus di EnglishKu.")}
                 target="_blank"
                 rel="noreferrer"
-                className="mt-2 inline-flex w-fit items-center gap-3"
+                className="mt-1 inline-flex w-fit items-center gap-1.5 sm:mt-2 sm:gap-3"
               >
-                <span className="btn-primary">Hubungi Kami</span>
-                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-forest-950 text-white transition group-hover:bg-brand-600">
-                  <ArrowUpRight size={18} />
+                <span className="btn-primary hidden sm:inline-flex">Hubungi Kami</span>
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-forest-950 text-white transition group-hover:bg-brand-600 sm:h-11 sm:w-11">
+                  <ArrowUpRight size={12} className="sm:hidden" />
+                  <ArrowUpRight size={18} className="hidden sm:block" />
                 </span>
               </a>
             </div>
 
             {/* illustrative panel, right */}
-            <div className="relative aspect-[4/5] w-[78%] shrink-0 snap-start overflow-hidden rounded-xl2 bg-gradient-to-br from-forest-800 to-forest-950 shadow-card sm:w-[46%] lg:w-full lg:shrink">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-lg bg-gradient-to-br from-forest-800 to-forest-950 shadow-card sm:rounded-xl2">
               <div className="absolute inset-0 bg-dot-grid bg-dot-sm opacity-20" />
-              <div className="flex h-full flex-col items-center justify-center gap-3 p-6 text-center text-white">
-                <GraduationCap size={40} className="opacity-90" />
-                <p className="font-display text-lg font-bold">Bimbingan Personal</p>
-                <p className="text-xs text-white/75">Progres belajar dipantau tiap minggu</p>
+              <div className="flex h-full flex-col items-center justify-center gap-1 p-1.5 text-center text-white sm:gap-3 sm:p-6">
+                <GraduationCap size={16} className="opacity-90 sm:hidden" />
+                <GraduationCap size={40} className="hidden opacity-90 sm:block" />
+                <p className="font-display text-[10px] font-bold leading-tight sm:text-lg">Bimbingan Personal</p>
+                <p className="hidden text-xs text-white/75 sm:block">Progres belajar dipantau tiap minggu</p>
               </div>
             </div>
           </div>
@@ -346,11 +351,9 @@ export default async function HomePage() {
               Belum ada program yang dipublikasikan.
             </div>
           ) : (
-            <div className="scroll-row -mx-4 flex snap-x snap-mandatory gap-5 overflow-x-auto px-4 pb-2 sm:mx-0 sm:grid sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3">
+            <div className="grid grid-cols-3 gap-2.5 sm:gap-5">
               {ditampilkan.map((p) => (
-                <div key={p.id} className="w-[78%] shrink-0 snap-start sm:w-auto sm:shrink">
-                  <ProdukCard {...p} />
-                </div>
+                <ProdukCard key={p.id} {...p} />
               ))}
             </div>
           )}
@@ -411,13 +414,14 @@ function FeatureRow({
   desc: string;
 }) {
   return (
-    <div className="flex items-start gap-4 rounded-xl2 bg-white p-4 shadow-card">
-      <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-xl text-white ${color}`}>
-        <Icon size={20} />
+    <div className="flex items-start gap-1.5 rounded-lg bg-white p-1.5 shadow-card sm:gap-4 sm:rounded-xl2 sm:p-4">
+      <span className={`flex h-6 w-6 shrink-0 items-center justify-center rounded-md text-white sm:h-11 sm:w-11 sm:rounded-xl ${color}`}>
+        <Icon size={12} className="sm:hidden" />
+        <Icon size={20} className="hidden sm:block" />
       </span>
-      <div>
-        <h3 className="font-display text-sm font-bold text-ink-900">{title}</h3>
-        <p className="mt-1 text-sm leading-relaxed text-ink-500">{desc}</p>
+      <div className="min-w-0">
+        <h3 className="font-display text-[10px] font-bold leading-tight text-ink-900 sm:text-sm">{title}</h3>
+        <p className="mt-1 hidden text-sm leading-relaxed text-ink-500 sm:block">{desc}</p>
       </div>
     </div>
   );
